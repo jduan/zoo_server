@@ -28,6 +28,8 @@ defmodule ZooServer.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:riffed, github: "pinterest/riffed", tag: "1.0.0", submodules: true}
+    ]
   end
 end
