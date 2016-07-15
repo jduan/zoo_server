@@ -12,19 +12,18 @@ defmodule ZooServer.Handler do
   end
 
   def get(%Models.AnimalsGetRequest{id: animal_id}) do
-    # case :ets.lookup(:animals, animal_id) do
-    #   [{^animal_id, animal}] -> %Models.AnimalsGetResponse{animal: animal}
-    #   # [] -> %Models.AnimalsGetResponse{error: }
-    #   [] -> :error
-    # end
-    animal = ZooServer.Models.Animal.new(id: "1",
-      type: ZooServer.Models.AnimalType.elephant, name: "daizy")
-    ZooServer.Models.AnimalsGetResponse.new(animal: animal)
+    id_int = String.to_integer(animal_id)
+    IO.puts("id_int is #{id_int}")
+    case :ets.lookup(:animals, id_int) do
+      [{^id_int, animal}] -> %Models.AnimalsGetResponse{animal: animal}
+      # [] -> %Models.AnimalsGetResponse{error: }
+      [] -> :error
+    end
   end
 
-  def create(%Models.AnimalsCreateRequest{animal: animal = %Models.Animal{type: type, name: name, weight: weight}}) do
+  def create(%Models.AnimalsCreateRequest{animal: animal}) do
     id = :ets.info(:animals, :size)
-    new_animal = Models.Animal.new(id: Integer.to_string(id), type: type, name: name, weight: weight)
+    new_animal = %{animal | id: Integer.to_string(id)}
     :ets.insert_new(:animals, {id, new_animal})
     ZooServer.Models.AnimalsCreateResponse.new(animal: new_animal)
   end
