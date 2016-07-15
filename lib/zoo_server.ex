@@ -10,6 +10,9 @@ defmodule ZooServer do
     children = [
       # Starts a worker by calling: ZooServer.Worker.start_link(arg1, arg2, arg3)
       # worker(ZooServer.Worker, [arg1, arg2, arg3]),
+      worker(ZooServer.Server, []),
+      worker(ZooServer.Client, []),
+      worker(ZooServer.Handler, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
