@@ -9,5 +9,5 @@ defmodule ZooServer.Client do
     framed: true
   ],
   service: :animals_thrift,
-  import: [:get]
+  import: [:get, :create]
 end

@@ -2,7 +2,10 @@ defmodule ZooServer.Server do
   use Riffed.Server,
   service: :animals_thrift,
   structs: ZooServer.Models,
-  functions: [get: &ZooServer.Handler.get/1],
+  functions: [
+    get: &ZooServer.Handler.get/1,
+    create: &ZooServer.Handler.create/1,
+  ],
   server: {
     :thrift_socket_server,
     port: 2112,
