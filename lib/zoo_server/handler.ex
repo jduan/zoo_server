@@ -13,13 +13,12 @@ defmodule ZooServer.Handler do
 
   def get(%Models.AnimalsGetRequest{id: animal_id}) do
     id_int = String.to_integer(animal_id)
-    IO.puts("id_int is #{id_int}")
     case :ets.lookup(:animals, id_int) do
       [{^id_int, animal}] ->
         %Models.AnimalsGetResponse{animal: animal}
       [] ->
         error_entry = Models.ErrorEntry.new(
-          reason: Models.ErrorReason.backend_error, message: "backend error")
+          reason: Models.ErrorReason.resource_not_found, message: "animal not found")
         error = Models.Error.new(errors: [error_entry])
         %Models.AnimalsGetResponse{error: error}
     end
