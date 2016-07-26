@@ -21,15 +21,18 @@ defmodule ZooServerTest do
 
   test "get animal that doesn't exist" do
     response = get_animal("0")
-    IO.puts(inspect response)
     error_entry = Models.ErrorEntry.new(
-      reason: Models.ErrorReason.resource_not_found, message: "animal not found")
+      reason: Models.ErrorReason.resource_not_found,
+      message: "animal not found",
+      # location defaults to :undefined when not specified
+      # see https://github.com/pinterest/riffed/issues/31
+      location: nil
+    )
     error = Models.Error.new(errors: [error_entry])
     assert response.error == error
   end
 
   defp create_animal() do
-    IO.puts("@animal is #{inspect @animal}")
     request = Models.AnimalsCreateRequest.new(animal: @animal)
     Client.create(request)
   end

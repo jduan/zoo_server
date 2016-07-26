@@ -8,15 +8,14 @@ defmodule ZooServer.Helper do
   }
 
   def animal_type(type) do
-    IO.puts("animal type lookup: #{inspect type}")
     @animal_type_lookup[type]
   end
 
   def animal(name, weight, type) do
     Models.Animal.new(
       type: animal_type(type),
-      name: "daizy",
-      weight: 100
+      name: name,
+      weight: weight
     )
   end
 end

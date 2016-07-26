@@ -35,5 +35,5 @@ defmodule ZooServer.Server do
   end
 
   enumerize_struct Animal, type: AnimalType
-  enumerize_struct ErrorEntry, type: ErrorReason
+  enumerize_struct ErrorEntry, reason: ErrorReason
 end
